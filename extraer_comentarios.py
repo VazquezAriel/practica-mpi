@@ -9,17 +9,16 @@ if __name__ == '__main__':
     comm = MPI.COMM_WORLD
     rank = comm.rank
     hostname = MPI.Get_processor_name()
-
     if rank == 0:
 
-        conn = sqlite3.connect('../practica-05/publicaciones.db')
+        conn = sqlite3.connect('publicaciones.db')
         c = conn.cursor()
         c.execute("SELECT * FROM publicaciones LIMIT 5")
         publicaciones = c.fetchall()
 
         url = "https://mbasic.facebook.com"
 
-        browser = webdriver.Chrome()
+        browser = webdriver.Firefox()
         browser.get(url)
         browser.find_element(By.CSS_SELECTOR, '[name="email"]').send_keys("leonelmessi23311@gmail.com")
         browser.find_element(By.CSS_SELECTOR, '[name="pass"]').send_keys("123987@1")
@@ -75,7 +74,7 @@ if __name__ == '__main__':
 
     if rank == 1:
 
-        conn = sqlite3.connect('../practica-05/publicaciones.db')
+        conn = sqlite3.connect('publicaciones.db')
         c = conn.cursor()
         c.execute("SELECT * FROM publicaciones LIMIT 5 OFFSET 5")
         publicaciones = c.fetchall()
