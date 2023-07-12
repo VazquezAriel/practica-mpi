@@ -11,7 +11,6 @@ from collections import Counter
 from mpi4py import MPI
 import csv
 
-
 def obtener_palabras_clave(texto):
     texto = unidecode(texto)
     stopwords_es = set(stopwords.words('spanish'))
@@ -81,14 +80,15 @@ def comentarios(publicaciones, i):
     return bolsa_palabras_ordenada, bolsa_usuarios_ordenada
 
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     # Configurar la codificación de la salida estándar
+
     sys.stdout.reconfigure(encoding='utf-8')
 
     conn = sqlite3.connect('publicaciones.db')
     c = conn.cursor()
     # c.execute('''CREATE TABLE IF NOT EXISTS comentarios(publicacion TEXT,usuario TEXT,comentario TEXT)''')
-    c.execute("SELECT * FROM publicaciones LIMIT 9")
+    c.execute("SELECT * FROM publicaciones LIMIT 10")
     publicaciones = c.fetchall()
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
